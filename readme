@@ -1,1 +1,0 @@
-ament build --isolated --symlink-install --parallel --only
