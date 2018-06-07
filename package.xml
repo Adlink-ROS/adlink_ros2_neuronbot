@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>adlink_ros2_neuronbot</name>
+    <version>2.0.0</version>
+    <description>ROS 2 version ADLINK NeuronBot</description>
+    <author email="haochih.lin@adlinktech.com">HaoChih, Lin</author>
+    <maintainer email="haochih.lin@adlinktech.com">HaoChih, LIN</maintainer>
+    <url type="website">https://neuron.adlinktech.com/en</url>
+    <license>Apache License 2.0</license>
+
+    <buildtool_depend>ament_cmake_ros</buildtool_depend>
+
+    <build_depend>rclcpp</build_depend>
+    <build_depend>rcutils</build_depend>
+    <build_depend>adlink_ros2_msgs</build_depend>
+    <build_depend>geometry_msgs</build_depend>
+    <build_depend>sensor_msgs</build_depend>
+    <build_depend>std_srvs</build_depend>
+    <build_depend>tf2</build_depend>
+    <build_depend>tf2_geometry_msgs</build_depend>
+    <build_depend>tf2_msgs</build_depend>
+    <build_depend>tf2_ros</build_depend>
+
+    <exec_depend>rclcpp</exec_depend>
+    <exec_depend>rcutils</exec_depend>
+    <exec_depend>adlink_ros2_msgs</exec_depend>
+    <exec_depend>geometry_msgs</exec_depend>
+    <exec_depend>sensor_msgs</exec_depend>
+    <exec_depend>std_srvs</exec_depend>
+    <exec_depend>tf2</exec_depend>
+    <exec_depend>tf2_geometry_msgs</exec_depend>
+    <exec_depend>tf2_msgs</exec_depend>
+    <exec_depend>tf2_ros</exec_depend>
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+</package>
