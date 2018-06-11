@@ -27,8 +27,8 @@
 #include "rclcpp/clock.hpp"
 #include "rclcpp/time_source.hpp" 
 
-#include "adlink_ros2_msgs/msg/person_array.hpp"
-#include "adlink_ros2_msgs/msg/person.hpp"
+#include "adlink_msgs/msg/person_array.hpp"
+#include "adlink_msgs/msg/person.hpp"
 #include "geometry_msgs/msg/pose.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 
@@ -56,15 +56,15 @@ class FollowMe : public rclcpp::Node
         tf2_ros::TransformListener tf2_;
 
         geometry_msgs::msg::Twist twist_;
-        adlink_ros2_msgs::msg::PersonArray personArray_;
+        adlink_msgs::msg::PersonArray personArray_;
         
-        rclcpp::Subscription<adlink_ros2_msgs::msg::PersonArray>::SharedPtr person_array_sub_;
+        rclcpp::Subscription<adlink_msgs::msg::PersonArray>::SharedPtr person_array_sub_;
         rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr twist_pub_;
         rclcpp::TimerBase::SharedPtr timer_;
      
-        void trackerCB(const adlink_ros2_msgs::msg::PersonArray::SharedPtr msg);
-        int findTargetId(const adlink_ros2_msgs::msg::PersonArray &person_array);
-        bool xyToPolar(const adlink_ros2_msgs::msg::PersonArray &person_array, const int &target_id, double &radius, double &theta);
+        void trackerCB(const adlink_msgs::msg::PersonArray::SharedPtr msg);
+        int findTargetId(const adlink_msgs::msg::PersonArray &person_array);
+        bool xyToPolar(const adlink_msgs::msg::PersonArray &person_array, const int &target_id, double &radius, double &theta);
         double constrain(const double &input, const double &limit_upper, const double &limit_lower);
         void sendCmd(const double &linear_x, const double &angular_z);
         void controlCB();
@@ -108,7 +108,7 @@ FollowMe::FollowMe() : Node("following_legs"), tf2_(buffer_)
     this->get_parameter_or("base_frame", base_frame_, std::string("/base_footprint"));
 
     // Create: Publisher, Subscriber & Timer
-    person_array_sub_ = this->create_subscription<adlink_ros2_msgs::msg::PersonArray>(
+    person_array_sub_ = this->create_subscription<adlink_msgs::msg::PersonArray>(
                       "/following/legs", std::bind(&FollowMe::trackerCB, this, std::placeholders::_1), rmw_qos_profile_sensor_data); //topic, QoS
 
     twist_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("/following/cmd_vel", rmw_qos_profile_sensor_data); //topic, QoS
@@ -130,7 +130,7 @@ FollowMe::~FollowMe()
 }
 
 
-void FollowMe::trackerCB(const adlink_ros2_msgs::msg::PersonArray::SharedPtr msg)
+void FollowMe::trackerCB(const adlink_msgs::msg::PersonArray::SharedPtr msg)
 {
     personArray_ = *msg;
     if(target_id_ == -1 && personArray_.people.size() > 0) 
@@ -143,7 +143,7 @@ void FollowMe::trackerCB(const adlink_ros2_msgs::msg::PersonArray::SharedPtr msg
 }
 
 
-int FollowMe::findTargetId(const adlink_ros2_msgs::msg::PersonArray &person_array)
+int FollowMe::findTargetId(const adlink_msgs::msg::PersonArray &person_array)
 {
     for(int i=0; i<person_array.people.size(); i++)
     {
@@ -155,7 +155,7 @@ int FollowMe::findTargetId(const adlink_ros2_msgs::msg::PersonArray &person_arra
 }
 
 
-bool FollowMe::xyToPolar(const adlink_ros2_msgs::msg::PersonArray &person_array, const int &target_id, double &radius, double &theta)
+bool FollowMe::xyToPolar(const adlink_msgs::msg::PersonArray &person_array, const int &target_id, double &radius, double &theta)
 {   
     try // transform Pose from /odom to /base_link
     {      

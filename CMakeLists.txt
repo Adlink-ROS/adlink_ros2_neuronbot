@@ -14,7 +14,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 #find_package(rcutils REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(adlink_ros2_msgs REQUIRED)
+find_package(adlink_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
@@ -23,7 +23,7 @@ find_package(tf2_geometry_msgs REQUIRED)
 add_executable(following_legs src/following_legs.cpp)
 ament_target_dependencies(following_legs 
 rclcpp 
-adlink_ros2_msgs 
+adlink_msgs 
 geometry_msgs 
 tf2
 tf2_ros
